@@ -1,0 +1,38 @@
+# Maintainer:  <zhaose233@outlook.com>
+pkgname=crmc
+pkgver=2.2.1
+pkgrel=1
+pkgdesc="The Cosmic Ray Monte Carlo Package"
+arch=('x86_64')
+url="https://gitlab.iap.kit.edu/AirShowerPhysics/crmc"
+license=('custom')
+depends=(hepmc boost-libs)
+makedepends=(cmake boost)
+source=("git+https://gitlab.iap.kit.edu/AirShowerPhysics/${pkgname}.git#tag=v${pkgver}")
+sha256sums=('5bea2121cd1771ee2aecdee9f7d84328923950d47eb04091cda7baae2ebd588e')
+
+prepare() {
+  cd "$pkgname"
+
+  # Fix boost system problem for boost 1.89+
+  sed -i 's/ system//g' CMakeLists.txt
+}
+
+build() {
+  cmake -B build-$pkgver -S $pkgname \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCRMC_QGSJETII04=ON \
+        -DCRMC_SIBYLL=ON
+  make -C build-$pkgver
+}
+
+package() {
+  DESTDIR="$pkgdir" make -C build-$pkgver install
+
+  # Fix /usr/etc issue
+  install -d "$pkgdir/etc/crmc"
+  mv "$pkgdir/usr/etc/"* "$pkgdir/etc/crmc/"
+  rmdir "$pkgdir/usr/etc"
+}
+
+# vim:set ts=2 sw=2 et:
