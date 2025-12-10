@@ -7,7 +7,7 @@ arch=('x86_64')
 url="https://gitlab.iap.kit.edu/AirShowerPhysics/crmc"
 license=('custom')
 depends=(hepmc boost-libs)
-makedepends=(cmake boost)
+makedepends=(cmake boost gfortran)
 source=("git+https://gitlab.iap.kit.edu/AirShowerPhysics/${pkgname}.git#tag=v${pkgver}")
 sha256sums=('5bea2121cd1771ee2aecdee9f7d84328923950d47eb04091cda7baae2ebd588e')
 
