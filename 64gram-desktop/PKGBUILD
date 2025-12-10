@@ -3,7 +3,7 @@
 # Contributor: KspLite <ksplite@outlook.com>
 # Contributor: Daniil Kovalev <daniil@kovalev.website>
 pkgname=64gram-desktop
-_pkgname=64Gram
+_pkgname=tdesktop
 pkgver=1.1.89
 pkgrel=1
 epoch=1
@@ -23,21 +23,17 @@ makedepends=('cmake' 'git' 'ninja' 'python' 'range-v3' 'tl-expected' 'microsoft-
 optdepends=('webkit2gtk: embedded browser features'
             'xdg-desktop-portal: desktop integration')
 
-source=("https://github.com/TDesktop-x64/tdesktop/releases/download/v${pkgver}/${_pkgname}-${pkgver}-full.tar.gz"
+source=("git+https://github.com/TDesktop-x64/tdesktop.git#tag=v${pkgver}"
         "block-sponsored_messages.patch"
         "fix-lzma-link.patch"
         "io.github.tdesktop_x64.TDesktop.desktop")
-sha512sums=('f60cef653077756ca913647e2107138746f976d4bcd5a53feffd854f6d5b608fd1357db5d6f8478dedad56f775eda76da043bde2ee349a80d9e0c743adcde34e'
+sha512sums=('b926d9421a9070cafdbe3f87ff21f9edd8b4191e6ff25a6850b7ffbd124e6dc9e66a8cbbe381e8e0a398de1189f74e63c5111135e30e6472c1d6eeeab8135cb1'
             '0e0f0dcb99ed6c7566e7a75404e39e16c27658eb5999e041a82aa975447ce8719ce6703cc36efc039e16a3ff3721f4a7c76df24f0ead9aa48ce5e23001142072'
             'd813a5ac6ff2208b693ecf494d7bf036087e223662f9f34aaaeafea0afe0fe798e867b9610f7221ea80319865502c20b61310d5a31634b888793873d63322463'
             'ea027bc2d40c74507adf32380444207210a8c31cdba57f3f468d23d8e9c7376647cc8c713f188660f9b1dacd9041227aafd5a27c7889f47ea3985712b6b74b8b')
 
-noextract=("${_pkgname}-${pkgver}-full.tar.gz")
-
-
 prepare() {
-    LANG=C.UTF-8 bsdtar -xf ${_pkgname}-${pkgver}-full.tar.gz
-    cd $_pkgname-$pkgver-full
+    cd $_pkgname
     patch -p1 --binary < ../fix-lzma-link.patch
     find "${srcdir}"/ -type f -exec dos2unix {} \;
 }
@@ -47,7 +43,7 @@ build() {
 
     cmake \
         -B build \
-        -S $_pkgname-$pkgver-full \
+        -S $_pkgname \
         -G Ninja \
         -DCMAKE_VERBOSE_MAKEFILE=ON \
         -DCMAKE_INSTALL_PREFIX="/usr" \
