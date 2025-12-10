@@ -33,7 +33,7 @@ sha512sums=('b926d9421a9070cafdbe3f87ff21f9edd8b4191e6ff25a6850b7ffbd124e6dc9e66
             'ea027bc2d40c74507adf32380444207210a8c31cdba57f3f468d23d8e9c7376647cc8c713f188660f9b1dacd9041227aafd5a27c7889f47ea3985712b6b74b8b')
 
 prepare() {
-    cd $_pkgname
+    cd "$srcdir/${_pkgname}"
     patch -p1 --binary < ../fix-lzma-link.patch
     find "${srcdir}"/ -type f -exec dos2unix {} \;
 }
