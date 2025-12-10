@@ -34,6 +34,7 @@ sha512sums=('b926d9421a9070cafdbe3f87ff21f9edd8b4191e6ff25a6850b7ffbd124e6dc9e66
 
 prepare() {
     cd "$srcdir/${_pkgname}"
+    git submodule update --init --recursive
     patch -p1 --binary < ../fix-lzma-link.patch
     find "${srcdir}"/ -type f -exec dos2unix {} \;
 }
