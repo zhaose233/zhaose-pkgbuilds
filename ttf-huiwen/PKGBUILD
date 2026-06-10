@@ -1,0 +1,24 @@
+# Maintainer:  <zhaose233@outlook.com>
+pkgname=ttf-huiwen
+pkgver=VERSION
+pkgrel=1.001
+pkgdesc="復古印刷字體"
+arch=('any')
+url="https://zhuanlan.zhihu.com/p/12669052378"
+license=('custom')
+source=(HWFangSong.ttf
+        HWGangHei.ttf
+        HWMingChao.ttf
+        HWZhengKai.ttf)
+sha256sums=('dd9569785a0596056cbd49e565be6952629e1b0f71c5b820c6db94d78866631a'
+            'c5d76581ca870f4c77eae33f82d589c845656cc91a744f4ad0c17f3ed96b14c5'
+            '00b2a8f288eede7cc955134025e8df97f6e2fc8b8f1ab9365eaf0e466925e4df'
+            'c5597407e8ebec614f75c649da9d2b959c3ff8db9a5fa07ded3818e2a0e7d109')
+
+package() {
+  for ttf_file in $(ls *.ttf); do
+    install -Dm644 $ttf_file "$pkgdir/usr/share/fonts/TTF/$ttf_file"
+  done
+}
+
+# vim:set ts=2 sw=2 et:
